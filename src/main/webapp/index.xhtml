@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"  
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://java.sun.com/jsf/html">
+   <h:head>
+      <title>#{msgs.windowTitle}</title>
+      
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   </h:head>
+   <h:body>
+      <h:form>
+         <h:dataTable value="#{tableData.names}" var="name" class="table table-bordered">
+            <h:column>
+               <f:facet name="header">
+                  <h:outputText value="Editable" 
+                                style="font-weight: bold"/>
+               </f:facet>
+               <h:selectBooleanCheckbox value="#{name.editable}" onclick="submit()"/>
+            </h:column>
+            <h:column>
+               <f:facet name="header">
+                <h:outputText value="Delete" 
+                                style="font-weight: bold"/>
+              
+ 
+               </f:facet>
+               <h:column>
+				<h:commandLink value="Delete" action="#{tableData.deleteRow(name)}"></h:commandLink>
+			</h:column>
+               
+            </h:column>
+            <h:column>
+               <f:facet name="header">
+                  <h:outputText value="Last Name" 
+                                style="font-weight: bold"/>
+               </f:facet>
+               <h:inputText value="#{name.last}" rendered="#{name.editable}" 
+                            size="10"/>
+               <h:outputText value="#{name.last}" rendered="#{not name.editable}"/>
+            </h:column>
+            <h:column>
+               <f:facet name="header">
+                  <h:outputText value="First Name" 
+                                style="font-weight: bold"/>
+               </f:facet>
+               <h:inputText value="#{name.first}" rendered="#{name.editable}" 
+                            size="10"/>
+               <h:outputText value="#{name.first}" rendered="#{not name.editable}"/>
+            </h:column>
+         </h:dataTable>
+         <h:commandButton value="Save" 
+                          action="#{tableData.save}" class="btn btn-success"/>
+      </h:form><br/><br/>
+      
+      <h:form class="form-inline">
+		<h:inputText binding="#{first}" class="form-control mb-4 mr-sm-4 mb-sm-0"></h:inputText>	
+		
+		<h:inputText binding="#{last}" class="form-control mb-4 mr-sm-4 mb-sm-0"></h:inputText>
+		
+		<h:commandButton value="Add" action="#{tableData.createName(first.value,last.value)}" ajax='false' class="btn btn-success"></h:commandButton>
+	</h:form>
+	
+		
+	
+   </h:body>
+</html>
